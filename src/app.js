@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Header from './components/header.js'
 
 export default class App extends React.Component {
   state = {
@@ -9,9 +13,16 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <div>
-        <button onClick={this.update}>Toggle is {this.state.clicked ? 'On' : 'Off'}</button>
-      </div>
+      <Router>
+        <Fragment>
+          <Header />
+          <Switch>
+            <Route path="/app" component={Form} />
+            <Route path="/analysis" component={Analysis} />
+            <Route path="/" exact component={Login} />
+          </Switch>
+        </Fragment>
+      </Router>
     )
   }
 }
