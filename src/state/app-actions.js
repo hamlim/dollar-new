@@ -1,4 +1,4 @@
-import { selectValueFromEvent } from './app_selectors'
+import { selectValueFromEvent } from './app-selectors'
 
 export const UPDATE_AMOUNT = 'UPDATE_AMOUNT'
 export const UPDATE_LOCATION = 'UPDATE_LOCATION'

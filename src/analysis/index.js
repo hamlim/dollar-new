@@ -1,3 +1,5 @@
 import React from 'react'
 
-export default () => 'Analysis'
+import Container from '../components/container.js'
+
+export default () => <Container>'Analysis'</Container>

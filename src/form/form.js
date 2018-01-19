@@ -1,5 +1,5 @@
 import styled from 'react-emotion'
-import { colors, widths } from '../../styles.js'
+import { colors, widths } from '../styles.js'
 
 const hexToRgb = hex => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")

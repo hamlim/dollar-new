@@ -4,12 +4,18 @@ import Header from './components/header.js'
 import Login from './login/index.js'
 import Form from './form/index.js'
 import Analysis from './analysis/index.js'
-import Firebase from 'firebase'
+import firebase from 'firebase'
+import firebaseConfig from './state/firebase-config'
+
+import reducer from './state/app-reducer.js'
 
 export default class App extends React.Component {
   state = {}
-  update = reducer => action => {
+  update = action => {
     this.setState(state => reducer(state, action))
+  }
+  componentDidMount() {
+    firebase.initializeApp(firebaseConfig)
   }
   render() {
     return (

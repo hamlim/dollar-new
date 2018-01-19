@@ -10,7 +10,7 @@ import {
   INVALID_LOCATION,
   INVALID_TAG,
   INVALID_TYPE,
-} from './app_actions'
+} from './app-actions.js'
 
 export const reducer = (state = {}, action) => {
   switch (action.type) {
