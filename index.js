@@ -10,7 +10,7 @@ injectGlobal`
   *::after {
     margin: 0;
     padding: 0;
-    bopx-sizing: border-box;
+    box-sizing: border-box;
   }
   html, body {
     background: ${colors.white};

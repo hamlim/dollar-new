@@ -12,6 +12,10 @@ export const INVALID_LOCATION = 'INVALID_LOCATION'
 export const INVALID_TAG = 'INVALID_TAG'
 export const INVALID_TYPE = 'INVALID_TYPE'
 
+export const LOGIN_STARTING = 'LOGIN_STARTING'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
 export const actionCreators = {
   amountChange(event) {
     const value = selectValueFromEvent(event)
@@ -34,8 +38,7 @@ export const actionCreators = {
       payload: value,
     }
   },
-  typeChange(event) {
-    const value = selectValueFromEvent(event)
+  typeChange(value) {
     return {
       type: UPDATE_TYPE,
       payload: value,

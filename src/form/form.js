@@ -1,12 +1,26 @@
 import styled from 'react-emotion'
 import { colors, widths } from '../styles.js'
 
+export {
+  FieldTextStateless as Input,
+} from '@atlaskit/field-text'
+export {
+  FieldTextAreaStateless as TextArea,
+} from '@atlaskit/field-text-area'
+
+export { default as Select } from '@atlaskit/select'
+
 const hexToRgb = hex => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
-  let cleanedHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b)
+  let cleanedHex = hex.replace(
+    shorthandRegex,
+    (m, r, g, b) => r + r + g + g + b + b,
+  )
 
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cleanedHex)
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+    cleanedHex,
+  )
   return result
     ? {
         r: parseInt(result[1], 16),
@@ -42,7 +56,8 @@ export const Button = styled('button')`
   border: solid 1px;
   border-radius: 4px;
   background-color: transparent;
-  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out,
+    color 0.5s ease-in-out;
   &:hover,
   &:focus,
   &:active {

@@ -1,5 +1,11 @@
 import React, { Fragment } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+import { Provider, Consumer } from './state/store'
 import Header from './components/header.js'
 import Login from './login/index.js'
 import Form from './form/index.js'
@@ -7,30 +13,57 @@ import Analysis from './analysis/index.js'
 import firebase from 'firebase'
 import firebaseConfig from './state/firebase-config'
 
-import reducer from './state/app-reducer.js'
+class DispatchOnMount extends React.Component {
+  componentDidMount() {
+    this.props.onMount()
+  }
+  render() {
+    return null
+  }
+}
 
 export default class App extends React.Component {
-  state = {}
-  update = action => {
-    this.setState(state => reducer(state, action))
-  }
   componentDidMount() {
     firebase.initializeApp(firebaseConfig)
   }
   render() {
     return (
       <Router>
-        <Fragment>
-          <Header />
-          <Switch>
-            <Route path="/app" render={({ match }) => match && <Form update={this.update} state={this.state} />} />
-            <Route
-              path="/analysis"
-              render={({ match }) => match && <Analysis update={this.update} state={this.state} />}
-            />
-            <Route path="/" exact render={({ match }) => match && <Login update={this.update} state={this.state} />} />
-          </Switch>
-        </Fragment>
+        <Provider>
+          <Fragment>
+            <Header />
+            <Switch>
+              <Route
+                path="/app"
+                render={({ match }) => match && <Form />}
+              />
+              <Route
+                path="/analysis"
+                render={({ match }) =>
+                  match && <Analysis />
+                }
+              />
+              <Route
+                path="/"
+                exact
+                render={({ match }) =>
+                  match && (
+                    <Fragment>
+                      <Login />
+                      <Consumer>
+                        {({ login }) =>
+                          login === 'done' && (
+                            <Redirect to="/app" />
+                          )
+                        }
+                      </Consumer>
+                    </Fragment>
+                  )
+                }
+              />
+            </Switch>
+          </Fragment>
+        </Provider>
       </Router>
     )
   }

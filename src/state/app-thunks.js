@@ -1,8 +1,18 @@
-import { selectAmount, selectLocation, selectNote, selectDate, selectTag, selectType } from './app_selectors'
-import actionCreators from './app_actions.js'
+import {
+  selectAmount,
+  selectLocation,
+  selectNote,
+  selectDate,
+  selectTag,
+  selectType,
+} from './app-selectors'
+import actionCreators from './app-actions.js'
 import firebase from 'firebase'
 
-export const handleFormSubmit = (dispatch, state) => event => {
+export const handleFormSubmit = (
+  dispatch,
+  state,
+) => event => {
   event.preventDefault()
   // Do some validation
   let hasAnyErrors = false
