@@ -7,7 +7,6 @@ import {
   selectType,
 } from './app-selectors'
 import actionCreators from './app-actions.js'
-import firebase from 'firebase'
 
 export const handleFormSubmit = (
   dispatch,

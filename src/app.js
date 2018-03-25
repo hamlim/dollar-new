@@ -10,22 +10,8 @@ import Header from './components/header.js'
 import Login from './login/index.js'
 import Form from './form/index.js'
 import Analysis from './analysis/index.js'
-import firebase from 'firebase'
-import firebaseConfig from './state/firebase-config'
-
-class DispatchOnMount extends React.Component {
-  componentDidMount() {
-    this.props.onMount()
-  }
-  render() {
-    return null
-  }
-}
 
 export default class App extends React.Component {
-  componentDidMount() {
-    firebase.initializeApp(firebaseConfig)
-  }
   render() {
     return (
       <Router>

@@ -71326,10 +71326,6 @@ var _appActions = require('./app-actions.js');
 
 var _appActions2 = _interopRequireDefault(_appActions);
 
-var _firebase = require('firebase');
-
-var _firebase2 = _interopRequireDefault(_firebase);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var handleFormSubmit = exports.handleFormSubmit = function handleFormSubmit(dispatch, state) {
@@ -71363,7 +71359,7 @@ var handleFormSubmit = exports.handleFormSubmit = function handleFormSubmit(disp
     }
   };
 };
-},{"./app-selectors":24,"./app-actions.js":16,"firebase":26}],398:[function(require,module,exports) {
+},{"./app-selectors":24,"./app-actions.js":16}],398:[function(require,module,exports) {
 var classof = require('./_classof');
 var ITERATOR = require('./_wks')('iterator');
 var Iterators = require('./_iterators');
@@ -74674,21 +74670,7 @@ exports.default = function () {
     '\'Analysis\''
   );
 };
-},{"react":12,"../components/container.js":15}],10:[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  apiKey: 'AIzaSyD0kWH-RQBmdKgtO8fzL-cREhYxsUOlnrQ',
-  authDomain: 'dollar-3be3d.firebaseapp.com',
-  databaseURL: 'https://dollar-3be3d.firebaseio.com',
-  projectId: 'dollar-3be3d',
-  storageBucket: 'dollar-3be3d.appspot.com',
-  messagingSenderId: '531585701243'
-};
-},{}],3:[function(require,module,exports) {
+},{"react":12,"../components/container.js":15}],3:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74721,14 +74703,6 @@ var _index5 = require('./analysis/index.js');
 
 var _index6 = _interopRequireDefault(_index5);
 
-var _firebase = require('firebase');
-
-var _firebase2 = _interopRequireDefault(_firebase);
-
-var _firebaseConfig = require('./state/firebase-config');
-
-var _firebaseConfig2 = _interopRequireDefault(_firebaseConfig);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -74737,32 +74711,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var DispatchOnMount = function (_React$Component) {
-  _inherits(DispatchOnMount, _React$Component);
-
-  function DispatchOnMount() {
-    _classCallCheck(this, DispatchOnMount);
-
-    return _possibleConstructorReturn(this, (DispatchOnMount.__proto__ || Object.getPrototypeOf(DispatchOnMount)).apply(this, arguments));
-  }
-
-  _createClass(DispatchOnMount, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.onMount();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return null;
-    }
-  }]);
-
-  return DispatchOnMount;
-}(_react2.default.Component);
-
-var App = function (_React$Component2) {
-  _inherits(App, _React$Component2);
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
 
   function App() {
     _classCallCheck(this, App);
@@ -74771,11 +74721,6 @@ var App = function (_React$Component2) {
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _firebase2.default.initializeApp(_firebaseConfig2.default);
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -74836,7 +74781,7 @@ var App = function (_React$Component2) {
 }(_react2.default.Component);
 
 exports.default = App;
-},{"react":12,"react-router-dom":25,"./state/store":9,"./components/header.js":5,"./login/index.js":6,"./form/index.js":7,"./analysis/index.js":8,"firebase":26,"./state/firebase-config":10}],2:[function(require,module,exports) {
+},{"react":12,"react-router-dom":25,"./state/store":9,"./components/header.js":5,"./login/index.js":6,"./form/index.js":7,"./analysis/index.js":8}],2:[function(require,module,exports) {
 'use strict';
 
 var _templateObject = _taggedTemplateLiteral(['\n  *,\n  *::before,\n  *::after {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n  }\n  html, body {\n    background: ', ';\n    font-family: sans-serif;\n  }\n'], ['\n  *,\n  *::before,\n  *::after {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n  }\n  html, body {\n    background: ', ';\n    font-family: sans-serif;\n  }\n']);
