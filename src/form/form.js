@@ -8,7 +8,9 @@ export {
   FieldTextAreaStateless as TextArea,
 } from '@atlaskit/field-text-area'
 
-export { default as Select } from '@atlaskit/select'
+export { default as Select } from '@atlaskit/single-select'
+
+export { default as Button } from '@atlaskit/button'
 
 const hexToRgb = hex => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -47,23 +49,6 @@ export const Form = styled('form')`
   font-size: 1.2rem;
   display: flex;
   flex-direction: column;
-`
-
-export const Button = styled('button')`
-  align-self: flex-end;
-  padding: 1rem 2rem;
-  color: ${colors.primary};
-  border: solid 1px;
-  border-radius: 4px;
-  background-color: transparent;
-  transition: background-color 0.5s ease-in-out,
-    color 0.5s ease-in-out;
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: ${colors.primary};
-    color: ${colors.white};
-  }
 `
 
 const rgb = hexToRgb(colors.secondary)

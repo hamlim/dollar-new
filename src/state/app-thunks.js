@@ -14,6 +14,7 @@ export const handleFormSubmit = (
   state,
 ) => event => {
   event.preventDefault()
+  dispatch(actionCreators.startFormSubmit())
   // Do some validation
   let hasAnyErrors = false
   if (selectAmount(state) === 0) {
@@ -37,5 +38,6 @@ export const handleFormSubmit = (
     return
   } else {
     // Sync state to localStorage and also to backend
+    dispatch(actionCreators.flushRecord())
   }
 }

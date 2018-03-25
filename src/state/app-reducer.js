@@ -13,6 +13,8 @@ import {
   LOGIN_STARTING,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  FLUSH_RECORD,
+  START_FORM_SUBMIT,
 } from './app-actions.js'
 
 const INIT_STATE = {
@@ -23,6 +25,7 @@ const INIT_STATE = {
   location: '',
   date: new Date(),
   login: '',
+  records: [],
 }
 
 export const reducer = action => (state = INIT_STATE) => {
@@ -94,6 +97,24 @@ export const reducer = action => (state = INIT_STATE) => {
         type: '',
         amount: 0,
         location: '',
+      }
+    case START_FORM_SUBMIT:
+      return {
+        formSubmitting: true,
+      }
+    case FLUSH_RECORD:
+      return {
+        records: [
+          ...state.records,
+          {
+            notes: state.notes,
+            tag: state.tag,
+            type: state.type,
+            amount: state.amount,
+            location: state.location,
+            date: new Date(),
+          },
+        ],
       }
     default:
       return state

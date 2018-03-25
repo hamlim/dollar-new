@@ -11,6 +11,8 @@ export const INVALID_AMOUNT = 'INVALID_AMOUNT'
 export const INVALID_LOCATION = 'INVALID_LOCATION'
 export const INVALID_TAG = 'INVALID_TAG'
 export const INVALID_TYPE = 'INVALID_TYPE'
+export const FLUSH_RECORD = 'FLUSH_RECORD'
+export const START_FORM_SUBMIT = 'START_FORM_SUBMIT'
 
 export const LOGIN_STARTING = 'LOGIN_STARTING'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -31,17 +33,16 @@ export const actionCreators = {
       payload: value,
     }
   },
-  tagChange(event) {
-    const value = selectValueFromEvent(event)
+  tagChange({ item }) {
     return {
       type: UPDATE_TAG,
-      payload: value,
+      payload: item,
     }
   },
-  typeChange(value) {
+  typeChange({ item }) {
     return {
       type: UPDATE_TYPE,
-      payload: value,
+      payload: item,
     }
   },
   notesChange(event) {
@@ -76,6 +77,16 @@ export const actionCreators = {
   invalidType() {
     return {
       type: INVALID_TYPE,
+    }
+  },
+  startFormSubmit() {
+    return {
+      type: START_FORM_SUBMIT,
+    }
+  },
+  flushRecord() {
+    return {
+      type: FLUSH_RECORD,
     }
   },
 }
