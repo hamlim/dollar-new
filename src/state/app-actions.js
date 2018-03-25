@@ -11,7 +11,6 @@ export const INVALID_AMOUNT = 'INVALID_AMOUNT'
 export const INVALID_LOCATION = 'INVALID_LOCATION'
 export const INVALID_TAG = 'INVALID_TAG'
 export const INVALID_TYPE = 'INVALID_TYPE'
-export const FLUSH_RECORD = 'FLUSH_RECORD'
 export const START_FORM_SUBMIT = 'START_FORM_SUBMIT'
 export const FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS'
 export const FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR'
@@ -21,6 +20,21 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 export const actionCreators = {
+  loginStart() {
+    return {
+      type: LOGIN_STARTING,
+    }
+  },
+  loginDone() {
+    return {
+      type: LOGIN_SUCCESS,
+    }
+  },
+  loginFail() {
+    return {
+      type: LOGIN_FAILURE,
+    }
+  },
   amountChange(event) {
     const value = selectValueFromEvent(event)
     return {
@@ -96,11 +110,6 @@ export const actionCreators = {
     return {
       type: FORM_SUBMIT_ERROR,
       payload: errors,
-    }
-  },
-  flushRecord() {
-    return {
-      type: FLUSH_RECORD,
     }
   },
 }

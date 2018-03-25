@@ -9,6 +9,7 @@
     "@atlaskit/select": "0.3.0",
     "@atlaskit/single-select": "^3.3.3",
     "@atlaskit/spinner": "^4.2.1",
+    "@matthamlin/react-error-boundary": "^1.0.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "emotion": "9.1.0",

@@ -13,12 +13,13 @@ import actionCreators from '../state/app-actions'
 import { handleFormSubmit } from '../state/app-thunks'
 import { Box, Flex } from 'grid-styled'
 import Spinner from '@atlaskit/spinner'
+import { FORM } from '../state/state-enums'
 
 export default () => (
   <Consumer>
     {({ dispatch, ...state }) => (
       <Container>
-        {state.formSubmitting === 'STARTING' ? (
+        {state.formSubmitting === FORM.starting ? (
           <Flex
             justifyContent="center"
             alignItems="center"
@@ -28,7 +29,7 @@ export default () => (
           </Flex>
         ) : (
           <Fragment>
-            {state.formSubmitting === 'DONE' && (
+            {state.formSubmitting === FORM.done && (
               <div>Successfully Submitted!</div>
             )}
             <Form>
@@ -50,6 +51,9 @@ export default () => (
                   <Select
                     value={state.type}
                     label="Enter Type:"
+                    validationState={
+                      state.typeError ? 'error' : null
+                    }
                     isInvalid={state.typeError}
                     onChange={event =>
                       dispatch(
@@ -80,6 +84,9 @@ export default () => (
                   <Select
                     value={state.tag}
                     label="Enter Tag:"
+                    validationState={
+                      state.tagError ? 'error' : null
+                    }
                     isInvalid={state.tagError}
                     onChange={event =>
                       dispatch(
@@ -113,6 +120,7 @@ export default () => (
                       )
                     }
                     value={state.location}
+                    isInvalid={state.locationError}
                     type="text"
                   />
                 </Box>

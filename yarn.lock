@@ -826,6 +826,10 @@
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.6.tgz#a4b81ca8cdeb1acbc7923289a4a514f61b59db86"
 
+"@matthamlin/react-error-boundary@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@matthamlin/react-error-boundary/-/react-error-boundary-1.0.0.tgz#f69785ad057bc4b772de6550e01ef1ca76387c42"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"

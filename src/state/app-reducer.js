@@ -13,11 +13,12 @@ import {
   LOGIN_STARTING,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
-  FLUSH_RECORD,
   START_FORM_SUBMIT,
   FORM_SUBMIT_SUCCESS,
   FORM_SUBMIT_ERROR,
 } from './app-actions.js'
+
+import { FORM, LOGIN } from './state-enums'
 
 const INIT_STATE = {
   notes: '',
@@ -36,16 +37,16 @@ export const reducer = action => (state = INIT_STATE) => {
     // login
     case LOGIN_STARTING:
       return {
-        login: 'starting',
+        login: LOGIN.starting,
       }
     case LOGIN_SUCCESS:
       return {
-        login: 'done',
+        login: LOGIN.done,
         user: action.payload,
       }
     case LOGIN_FAILURE:
       return {
-        login: 'failed',
+        login: LOGIN.failed,
         authError: action.payload,
       }
     // Form
@@ -56,6 +57,7 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case INVALID_AMOUNT:
       return {
+        formSubmitting: FORM.error,
         amountError: true,
       }
     case UPDATE_LOCATION:
@@ -65,6 +67,7 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case INVALID_LOCATION:
       return {
+        formSubmitting: FORM.error,
         locationError: true,
       }
     case UPDATE_TAG:
@@ -74,6 +77,7 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case INVALID_TAG:
       return {
+        formSubmitting: FORM.error,
         tagError: true,
       }
     case UPDATE_TYPE:
@@ -83,6 +87,7 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case INVALID_TYPE:
       return {
+        formSubmitting: FORM.error,
         typeError: true,
       }
     case UPDATE_NOTES:
@@ -103,11 +108,11 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case START_FORM_SUBMIT:
       return {
-        formSubmitting: 'STARTING',
+        formSubmitting: FORM.starting,
       }
     case FORM_SUBMIT_SUCCESS:
       return {
-        formSubmitting: 'DONE',
+        formSubmitting: FORM.done,
         postedRecords: [
           ...state.postedRecords,
           action.payload,
@@ -115,22 +120,8 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case FORM_SUBMIT_ERROR:
       return {
-        formSubmitting: 'DONE',
+        formSubmitting: FORM.done,
         errors: payload,
-      }
-    case FLUSH_RECORD:
-      return {
-        records: [
-          ...state.records,
-          {
-            notes: state.notes,
-            tag: state.tag,
-            type: state.type,
-            amount: state.amount,
-            location: state.location,
-            date: new Date(),
-          },
-        ],
       }
     default:
       return state
