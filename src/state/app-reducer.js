@@ -15,6 +15,8 @@ import {
   LOGIN_SUCCESS,
   FLUSH_RECORD,
   START_FORM_SUBMIT,
+  FORM_SUBMIT_SUCCESS,
+  FORM_SUBMIT_ERROR,
 } from './app-actions.js'
 
 const INIT_STATE = {
@@ -26,6 +28,7 @@ const INIT_STATE = {
   date: new Date(),
   login: '',
   records: [],
+  postedRecords: [],
 }
 
 export const reducer = action => (state = INIT_STATE) => {
@@ -100,7 +103,20 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case START_FORM_SUBMIT:
       return {
-        formSubmitting: true,
+        formSubmitting: 'STARTING',
+      }
+    case FORM_SUBMIT_SUCCESS:
+      return {
+        formSubmitting: 'DONE',
+        postedRecords: [
+          ...state.postedRecords,
+          action.payload,
+        ],
+      }
+    case FORM_SUBMIT_ERROR:
+      return {
+        formSubmitting: 'DONE',
+        errors: payload,
       }
     case FLUSH_RECORD:
       return {

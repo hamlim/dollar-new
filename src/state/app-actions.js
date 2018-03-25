@@ -13,6 +13,8 @@ export const INVALID_TAG = 'INVALID_TAG'
 export const INVALID_TYPE = 'INVALID_TYPE'
 export const FLUSH_RECORD = 'FLUSH_RECORD'
 export const START_FORM_SUBMIT = 'START_FORM_SUBMIT'
+export const FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS'
+export const FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR'
 
 export const LOGIN_STARTING = 'LOGIN_STARTING'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -82,6 +84,18 @@ export const actionCreators = {
   startFormSubmit() {
     return {
       type: START_FORM_SUBMIT,
+    }
+  },
+  successfulPost(data) {
+    return {
+      type: FORM_SUBMIT_SUCCESS,
+      payload: data,
+    }
+  },
+  errorPost(errors) {
+    return {
+      type: FORM_SUBMIT_ERROR,
+      payload: errors,
     }
   },
   flushRecord() {

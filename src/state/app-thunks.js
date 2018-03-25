@@ -37,6 +37,51 @@ export const handleFormSubmit = (
     return
   } else {
     // Sync state to localStorage and also to backend
-    dispatch(actionCreators.flushRecord())
+    fetch(
+      'https://api.graph.cool/simple/v1/cjf62z1x73dy90177u2vx3x3w',
+      {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              createTransaction(
+                amount: "${state.amount}",
+                notes: "${state.notes}",
+                tag: "${state.tag.value}",
+                type: "${state.type.value}",
+                location: "${state.location}",
+                date: "${Date.now().toString()}"
+              ) {
+                id,
+                amount,
+                notes,
+                tag,
+                type,
+                location,
+                date
+              }
+            }
+          `,
+        }),
+      },
+    )
+      .then(r => r.json())
+      .then(response => {
+        if (response.data) {
+          dispatch(
+            actionCreators.successfulPost(
+              response.data.createTransaction,
+            ),
+          )
+        } else if (response.errors) {
+          dispatch(
+            actionCreators.errorPost(response.errors),
+          )
+        }
+      })
+      .catch(console.error)
   }
 }

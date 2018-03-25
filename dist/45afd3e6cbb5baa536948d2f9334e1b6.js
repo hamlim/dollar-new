@@ -26105,7 +26105,7 @@ var selectValueFromEvent = exports.selectValueFromEvent = function selectValueFr
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.actionCreators = exports.LOGIN_FAILURE = exports.LOGIN_SUCCESS = exports.LOGIN_STARTING = exports.START_FORM_SUBMIT = exports.FLUSH_RECORD = exports.INVALID_TYPE = exports.INVALID_TAG = exports.INVALID_LOCATION = exports.INVALID_AMOUNT = exports.UPDATE_DATE = exports.FORM_SUBMIT = exports.UPDATE_NOTES = exports.UPDATE_TYPE = exports.UPDATE_TAG = exports.UPDATE_LOCATION = exports.UPDATE_AMOUNT = undefined;
+exports.actionCreators = exports.LOGIN_FAILURE = exports.LOGIN_SUCCESS = exports.LOGIN_STARTING = exports.FORM_SUBMIT_ERROR = exports.FORM_SUBMIT_SUCCESS = exports.START_FORM_SUBMIT = exports.FLUSH_RECORD = exports.INVALID_TYPE = exports.INVALID_TAG = exports.INVALID_LOCATION = exports.INVALID_AMOUNT = exports.UPDATE_DATE = exports.FORM_SUBMIT = exports.UPDATE_NOTES = exports.UPDATE_TYPE = exports.UPDATE_TAG = exports.UPDATE_LOCATION = exports.UPDATE_AMOUNT = undefined;
 
 var _appSelectors = require('./app-selectors');
 
@@ -26122,6 +26122,8 @@ var INVALID_TAG = exports.INVALID_TAG = 'INVALID_TAG';
 var INVALID_TYPE = exports.INVALID_TYPE = 'INVALID_TYPE';
 var FLUSH_RECORD = exports.FLUSH_RECORD = 'FLUSH_RECORD';
 var START_FORM_SUBMIT = exports.START_FORM_SUBMIT = 'START_FORM_SUBMIT';
+var FORM_SUBMIT_SUCCESS = exports.FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS';
+var FORM_SUBMIT_ERROR = exports.FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR';
 
 var LOGIN_STARTING = exports.LOGIN_STARTING = 'LOGIN_STARTING';
 var LOGIN_SUCCESS = exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -26197,6 +26199,18 @@ var actionCreators = exports.actionCreators = {
       type: START_FORM_SUBMIT
     };
   },
+  successfulPost: function successfulPost(data) {
+    return {
+      type: FORM_SUBMIT_SUCCESS,
+      payload: data
+    };
+  },
+  errorPost: function errorPost(errors) {
+    return {
+      type: FORM_SUBMIT_ERROR,
+      payload: errors
+    };
+  },
   flushRecord: function flushRecord() {
     return {
       type: FLUSH_RECORD
@@ -26225,7 +26239,8 @@ var INIT_STATE = {
   location: '',
   date: new Date(),
   login: '',
-  records: []
+  records: [],
+  postedRecords: []
 };
 
 var reducer = exports.reducer = function reducer(action) {
@@ -26302,7 +26317,17 @@ var reducer = exports.reducer = function reducer(action) {
         };
       case _appActions.START_FORM_SUBMIT:
         return {
-          formSubmitting: true
+          formSubmitting: 'STARTING'
+        };
+      case _appActions.FORM_SUBMIT_SUCCESS:
+        return {
+          formSubmitting: 'DONE',
+          postedRecords: [].concat(_toConsumableArray(state.postedRecords), [action.payload])
+        };
+      case _appActions.FORM_SUBMIT_ERROR:
+        return {
+          formSubmitting: 'DONE',
+          errors: payload
         };
       case _appActions.FLUSH_RECORD:
         return {
@@ -71355,7 +71380,23 @@ var handleFormSubmit = exports.handleFormSubmit = function handleFormSubmit(disp
       return;
     } else {
       // Sync state to localStorage and also to backend
-      dispatch(_appActions2.default.flushRecord());
+      fetch('https://api.graph.cool/simple/v1/cjf62z1x73dy90177u2vx3x3w', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: '\n            mutation {\n              createTransaction(\n                amount: "' + state.amount + '",\n                notes: "' + state.notes + '",\n                tag: "' + state.tag.value + '",\n                type: "' + state.type.value + '",\n                location: "' + state.location + '",\n                date: "' + Date.now().toString() + '"\n              ) {\n                id,\n                amount,\n                notes,\n                tag,\n                type,\n                location,\n                date\n              }\n            }\n          '
+        })
+      }).then(function (r) {
+        return r.json();
+      }).then(function (response) {
+        if (response.data) {
+          dispatch(_appActions2.default.successfulPost(response.data.createTransaction));
+        } else if (response.errors) {
+          dispatch(_appActions2.default.errorPost(response.errors));
+        }
+      }).catch(console.error);
     }
   };
 };
@@ -74519,7 +74560,7 @@ exports.default = function () {
       return _react2.default.createElement(
         _container2.default,
         null,
-        state.formSubmitting ? _react2.default.createElement(
+        state.formSubmitting === 'STARTING' ? _react2.default.createElement(
           _gridStyled.Flex,
           {
             justifyContent: 'center',
@@ -74528,115 +74569,124 @@ exports.default = function () {
           },
           _react2.default.createElement(_spinner2.default, { size: 'xlarge' })
         ) : _react2.default.createElement(
-          _form.Form,
+          _react.Fragment,
           null,
+          state.formSubmitting === 'DONE' && _react2.default.createElement(
+            'div',
+            null,
+            'Successfully Submitted!'
+          ),
           _react2.default.createElement(
-            _gridStyled.Flex,
-            { flexDirection: 'column' },
-            _react2.default.createElement(
-              _gridStyled.Box,
-              { my: 2 },
-              _react2.default.createElement(_form.Input, {
-                isInvalid: state.amountError,
-                label: 'Enter Amount: ',
-                onChange: function onChange(event) {
-                  return dispatch(_appActions2.default.amountChange(event));
-                },
-                value: state.amount,
-                type: 'text'
-              })
-            ),
-            _react2.default.createElement(
-              _gridStyled.Box,
-              { my: 2 },
-              _react2.default.createElement(_form.Select, {
-                value: state.type,
-                label: 'Enter Type:',
-                isInvalid: state.typeError,
-                onSelected: function onSelected(event) {
-                  return dispatch(_appActions2.default.typeChange(event));
-                },
-                hasAutocomplete: true,
-                items: [{
-                  items: [{
-                    content: 'Groceries',
-                    value: 'groceries'
-                  }, {
-                    content: 'Fast Food',
-                    value: 'fast-food'
-                  }, {
-                    content: 'Home',
-                    value: 'home'
-                  }, {
-                    content: 'Health',
-                    value: 'health'
-                  }]
-                }]
-              })
-            ),
-            _react2.default.createElement(
-              _gridStyled.Box,
-              { my: 2 },
-              _react2.default.createElement(_form.Select, {
-                value: state.tag,
-                label: 'Enter Tag:',
-                isInvalid: state.tagError,
-                onSelected: function onSelected(event) {
-                  return dispatch(_appActions2.default.tagChange(event));
-                },
-                hasAutocomplete: true,
-                items: [{
-                  items: [{
-                    content: 'Debit',
-                    value: 'debit'
-                  }, {
-                    content: 'Credit Card',
-                    value: 'credit'
-                  }, {
-                    content: 'Cash',
-                    value: 'cash'
-                  }]
-                }]
-              })
-            ),
-            _react2.default.createElement(
-              _gridStyled.Box,
-              { my: 2 },
-              _react2.default.createElement(_form.Input, {
-                label: 'Enter Location:',
-                onChange: function onChange(event) {
-                  return dispatch(_appActions2.default.locationChange(event));
-                },
-                value: state.location,
-                type: 'text'
-              })
-            ),
-            _react2.default.createElement(
-              _gridStyled.Box,
-              { my: 2 },
-              _react2.default.createElement(_form.TextArea, {
-                label: 'Enter Notes:',
-                id: 'notes',
-                onChange: function onChange(event) {
-                  return dispatch(_appActions2.default.notesChange(event));
-                },
-                value: state.notes
-              })
-            ),
+            _form.Form,
+            null,
             _react2.default.createElement(
               _gridStyled.Flex,
-              { justifyContent: 'flex-end' },
+              { flexDirection: 'column' },
               _react2.default.createElement(
                 _gridStyled.Box,
                 { my: 2 },
-                _react2.default.createElement(
-                  _form.Button,
-                  {
-                    type: 'button',
-                    appearance: 'primary',
-                    onClick: (0, _appThunks.handleFormSubmit)(dispatch, state)
+                _react2.default.createElement(_form.Input, {
+                  isInvalid: state.amountError,
+                  label: 'Enter Amount: ',
+                  onChange: function onChange(event) {
+                    return dispatch(_appActions2.default.amountChange(event));
                   },
-                  'Submit'
+                  value: state.amount,
+                  type: 'text'
+                })
+              ),
+              _react2.default.createElement(
+                _gridStyled.Box,
+                { my: 2 },
+                _react2.default.createElement(_form.Select, {
+                  value: state.type,
+                  label: 'Enter Type:',
+                  isInvalid: state.typeError,
+                  onSelected: function onSelected(event) {
+                    return dispatch(_appActions2.default.typeChange(event));
+                  },
+                  hasAutocomplete: true,
+                  items: [{
+                    items: [{
+                      content: 'Groceries',
+                      value: 'groceries'
+                    }, {
+                      content: 'Fast Food',
+                      value: 'fast-food'
+                    }, {
+                      content: 'Home',
+                      value: 'home'
+                    }, {
+                      content: 'Health',
+                      value: 'health'
+                    }]
+                  }]
+                })
+              ),
+              _react2.default.createElement(
+                _gridStyled.Box,
+                { my: 2 },
+                _react2.default.createElement(_form.Select, {
+                  value: state.tag,
+                  label: 'Enter Tag:',
+                  isInvalid: state.tagError,
+                  onSelected: function onSelected(event) {
+                    return dispatch(_appActions2.default.tagChange(event));
+                  },
+                  hasAutocomplete: true,
+                  items: [{
+                    items: [{
+                      content: 'Debit',
+                      value: 'debit'
+                    }, {
+                      content: 'Credit Card',
+                      value: 'credit'
+                    }, {
+                      content: 'Cash',
+                      value: 'cash'
+                    }]
+                  }]
+                })
+              ),
+              _react2.default.createElement(
+                _gridStyled.Box,
+                { my: 2 },
+                _react2.default.createElement(_form.Input, {
+                  label: 'Enter Location:',
+                  onChange: function onChange(event) {
+                    return dispatch(_appActions2.default.locationChange(event));
+                  },
+                  value: state.location,
+                  type: 'text'
+                })
+              ),
+              _react2.default.createElement(
+                _gridStyled.Box,
+                { my: 2 },
+                _react2.default.createElement(_form.TextArea, {
+                  label: 'Enter Notes:',
+                  id: 'notes',
+                  onChange: function onChange(event) {
+                    return dispatch(_appActions2.default.notesChange(event));
+                  },
+                  value: state.notes
+                })
+              ),
+              _react2.default.createElement(
+                _gridStyled.Flex,
+                { justifyContent: 'flex-end' },
+                _react2.default.createElement(
+                  _gridStyled.Box,
+                  { my: 2 },
+                  _react2.default.createElement(
+                    _form.Button,
+                    {
+                      type: 'button',
+                      appearance: 'primary',
+                      onClick: (0, _appThunks.handleFormSubmit)(dispatch, state)
+                    },
+                    'Submit'
+                  )
                 )
               )
             )
@@ -74809,7 +74859,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 var element = document.querySelector('#root');
 
 (0, _reactDom.render)(_react2.default.createElement(_app2.default, null), element);
-},{"react":12,"react-emotion":11,"react-dom":13,"./src/app.js":3,"./src/styles.js":4}],557:[function(require,module,exports) {
+},{"react":12,"react-emotion":11,"react-dom":13,"./src/app.js":3,"./src/styles.js":4}],562:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -74932,5 +74982,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[557,2])
+},{}]},{},[562,2])
 //# sourceMappingURL=/dist/45afd3e6cbb5baa536948d2f9334e1b6.map
