@@ -51,32 +51,27 @@ export default () => (
                     value={state.type}
                     label="Enter Type:"
                     isInvalid={state.typeError}
-                    onSelected={event =>
+                    onChange={event =>
                       dispatch(
                         actionCreators.typeChange(event),
                       )
                     }
-                    hasAutocomplete
-                    items={[
+                    options={[
                       {
-                        items: [
-                          {
-                            content: 'Groceries',
-                            value: 'groceries',
-                          },
-                          {
-                            content: 'Fast Food',
-                            value: 'fast-food',
-                          },
-                          {
-                            content: 'Home',
-                            value: 'home',
-                          },
-                          {
-                            content: 'Health',
-                            value: 'health',
-                          },
-                        ],
+                        label: 'Groceries',
+                        value: 'groceries',
+                      },
+                      {
+                        label: 'Fast Food',
+                        value: 'fast-food',
+                      },
+                      {
+                        label: 'Home',
+                        value: 'home',
+                      },
+                      {
+                        label: 'Health',
+                        value: 'health',
                       },
                     ]}
                   />
@@ -86,28 +81,23 @@ export default () => (
                     value={state.tag}
                     label="Enter Tag:"
                     isInvalid={state.tagError}
-                    onSelected={event =>
+                    onChange={event =>
                       dispatch(
                         actionCreators.tagChange(event),
                       )
                     }
-                    hasAutocomplete
-                    items={[
+                    options={[
                       {
-                        items: [
-                          {
-                            content: 'Debit',
-                            value: 'debit',
-                          },
-                          {
-                            content: 'Credit Card',
-                            value: 'credit',
-                          },
-                          {
-                            content: 'Cash',
-                            value: 'cash',
-                          },
-                        ],
+                        label: 'Debit',
+                        value: 'debit',
+                      },
+                      {
+                        label: 'Credit Card',
+                        value: 'credit',
+                      },
+                      {
+                        label: 'Cash',
+                        value: 'cash',
                       },
                     ]}
                   />

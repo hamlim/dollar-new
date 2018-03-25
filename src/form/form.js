@@ -8,7 +8,7 @@ export {
   FieldTextAreaStateless as TextArea,
 } from '@atlaskit/field-text-area'
 
-export { default as Select } from '@atlaskit/single-select'
+export { default as Select } from '@atlaskit/select'
 
 export { default as Button } from '@atlaskit/button'
 

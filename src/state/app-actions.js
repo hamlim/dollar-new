@@ -35,16 +35,16 @@ export const actionCreators = {
       payload: value,
     }
   },
-  tagChange({ item }) {
+  tagChange(value) {
     return {
       type: UPDATE_TAG,
-      payload: item,
+      payload: value,
     }
   },
-  typeChange({ item }) {
+  typeChange(value) {
     return {
       type: UPDATE_TYPE,
-      payload: item,
+      payload: value,
     }
   },
   notesChange(event) {
