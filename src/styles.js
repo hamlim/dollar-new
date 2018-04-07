@@ -5,6 +5,7 @@ export const colors = {
   secondary: '#FA8072',
   tertiary: '#72a8fa',
   accent: '#8072fa',
+  warning: '#DE350B',
 }
 
 export const breakpoints = {

@@ -49,6 +49,7 @@ export default () => (
                 </Box>
                 <Box my={2}>
                   <Select
+                    label="Select a type:"
                     value={state.type}
                     label="Enter Type:"
                     validationState={
@@ -82,6 +83,7 @@ export default () => (
                 </Box>
                 <Box my={2}>
                   <Select
+                    label="Select a tag:"
                     value={state.tag}
                     label="Enter Tag:"
                     validationState={
@@ -111,6 +113,7 @@ export default () => (
                 </Box>
                 <Box my={2}>
                   <Input
+                    isFitContainerWidthEnabled
                     label="Enter Location:"
                     onChange={event =>
                       dispatch(
@@ -126,6 +129,7 @@ export default () => (
                 </Box>
                 <Box my={2}>
                   <TextArea
+                    isFitContainerWidthEnabled
                     label="Enter Notes:"
                     id="notes"
                     onChange={event =>
