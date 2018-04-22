@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/matt/.nvm/versions/node/v9.4.0/bin/node /Users/matt/.yarn/bin/yarn.js run dev
+  /Users/matt/.nvm/versions/node/v9.4.0/bin/node /Users/matt/.yarn/bin/yarn.js dev
 
 PATH: 
   /Users/matt/.yarn/bin:/Users/matt/.nvm/versions/node/v9.4.0/bin:/Users/matt/.npm-packages/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin

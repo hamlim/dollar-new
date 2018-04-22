@@ -14,25 +14,21 @@ export const INVALID_TYPE = 'INVALID_TYPE'
 export const START_FORM_SUBMIT = 'START_FORM_SUBMIT'
 export const FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS'
 export const FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR'
+export const CLEAR_FORM = 'CLEAR_FORM'
 
-export const LOGIN_STARTING = 'LOGIN_STARTING'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGIN = 'LOGIN'
+
+export const FETCH_TRANSACTIONS_START =
+  'FETCH_TRANSACTIONS_START'
+export const FETCH_TRANSACTIONS_SUCCESS =
+  'FETCH_TRANSACTIONS_SUCCESS'
+export const FETCH_TRANSACTIONS_FAIL =
+  'FETCH_TRANSACTIONS_FAIL'
 
 export const actionCreators = {
-  loginStart() {
+  login() {
     return {
-      type: LOGIN_STARTING,
-    }
-  },
-  loginDone() {
-    return {
-      type: LOGIN_SUCCESS,
-    }
-  },
-  loginFail() {
-    return {
-      type: LOGIN_FAILURE,
+      type: LOGIN,
     }
   },
   amountChange(event) {
@@ -110,6 +106,29 @@ export const actionCreators = {
     return {
       type: FORM_SUBMIT_ERROR,
       payload: errors,
+    }
+  },
+  clearForm() {
+    return {
+      type: CLEAR_FORM,
+    }
+  },
+  // Fetch all transactions
+  fetchAllTransactionsStart() {
+    return {
+      type: FETCH_TRANSACTIONS_START,
+    }
+  },
+  fetchAllTransactionsSuccess(payload) {
+    return {
+      type: FETCH_TRANSACTIONS_SUCCESS,
+      payload,
+    }
+  },
+  fetchAllTransactionsFail(payload) {
+    return {
+      type: FETCH_TRANSACTIONS_FAIL,
+      payload,
     }
   },
 }

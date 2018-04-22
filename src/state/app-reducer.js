@@ -10,15 +10,21 @@ import {
   INVALID_LOCATION,
   INVALID_TAG,
   INVALID_TYPE,
-  LOGIN_STARTING,
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
+  LOGIN,
   START_FORM_SUBMIT,
   FORM_SUBMIT_SUCCESS,
   FORM_SUBMIT_ERROR,
+  CLEAR_FORM,
+  FETCH_TRANSACTIONS_START,
+  FETCH_TRANSACTIONS_FAIL,
+  FETCH_TRANSACTIONS_SUCCESS,
 } from './app-actions.js'
 
-import { FORM, LOGIN } from './state-enums'
+import {
+  FORM,
+  LOGIN as LOGIN_STATE,
+  TRANSACTIONS,
+} from './state-enums'
 
 const INIT_STATE = {
   notes: '',
@@ -30,24 +36,15 @@ const INIT_STATE = {
   login: '',
   records: [],
   postedRecords: [],
+  allTransactions: TRANSACTIONS.default,
 }
 
 export const reducer = action => (state = INIT_STATE) => {
   switch (action.type) {
     // login
-    case LOGIN_STARTING:
+    case LOGIN:
       return {
-        login: LOGIN.starting,
-      }
-    case LOGIN_SUCCESS:
-      return {
-        login: LOGIN.done,
-        user: action.payload,
-      }
-    case LOGIN_FAILURE:
-      return {
-        login: LOGIN.failed,
-        authError: action.payload,
+        login: LOGIN_STATE.done,
       }
     // Form
     case UPDATE_AMOUNT:
@@ -122,6 +119,28 @@ export const reducer = action => (state = INIT_STATE) => {
       return {
         formSubmitting: FORM.done,
         errors: payload,
+      }
+    case CLEAR_FORM:
+      return {
+        formSubmitting: FORM.default,
+        notes: '',
+        tag: '',
+        type: '',
+        amount: 0,
+        location: '',
+      }
+    // Fetch all transactions
+    case FETCH_TRANSACTIONS_START:
+      return {
+        allTransactions: TRANSACTIONS.starting,
+      }
+    case FETCH_TRANSACTIONS_FAIL:
+      return {
+        allTransactions: TRANSACTIONS.fail,
+      }
+    case FETCH_TRANSACTIONS_SUCCESS:
+      return {
+        allTransactions: TRANSACTIONS.done(action.payload),
       }
     default:
       return state
