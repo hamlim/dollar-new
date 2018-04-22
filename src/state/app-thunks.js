@@ -84,7 +84,7 @@ export const handleFormSubmit = (
 export const fetchAllTransactions = dispatch => {
   dispatch(actionCreators.fetchAllTransactionsStart())
   fetch(
-    'https://api.airtable.com/v0/appuFTGsGkQe83DZn/Transactions?maxRecords=3&view=Main%20View',
+    'https://api.airtable.com/v0/appuFTGsGkQe83DZn/Transactions?view=Main%20View',
     {
       method: 'GET',
       headers,

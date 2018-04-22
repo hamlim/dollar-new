@@ -140,7 +140,9 @@ export const reducer = action => (state = INIT_STATE) => {
       }
     case FETCH_TRANSACTIONS_SUCCESS:
       return {
-        allTransactions: TRANSACTIONS.done(action.payload),
+        allTransactions: TRANSACTIONS.done(
+          action.payload.records,
+        ),
       }
     default:
       return state

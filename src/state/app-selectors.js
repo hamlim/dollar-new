@@ -5,5 +5,10 @@ export const selectDate = state => state.date
 export const selectTag = state => state.tag
 export const selectType = state => state.type
 
+export const selectTransactionState = state =>
+  typeof state.allTransactions === 'string'
+    ? state.allTransactions
+    : 'DONE'
+
 export const selectValueFromEvent = event =>
   event.target.value
