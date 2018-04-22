@@ -1,14 +1,11 @@
+import React from 'react'
 import styled from 'react-emotion'
 import { colors, widths } from '../styles.js'
+import chroma from 'chroma-js'
 
-export {
-  FieldTextStateless as Input,
-} from '@atlaskit/field-text'
-export {
-  FieldTextAreaStateless as TextArea,
-} from '@atlaskit/field-text-area'
+import BaseSelect from '@atlaskit/select'
 
-export { default as Select } from '@atlaskit/single-select'
+// export { default as Select } from '@atlaskit/select'
 
 export { default as Button } from '@atlaskit/button'
 
@@ -61,3 +58,100 @@ export const Error = styled('div')`
   padding: 0.5rem;
   margin: 0.5rem 0 2rem;
 `
+const darken = (hex, amount = 0.5) =>
+  chroma(hex)
+    .darken(amount)
+    .hex()
+
+export const BaseInput = styled('input')`
+  appearance: none;
+  padding: 0.75em;
+  border: solid 1px rgb(250, 251, 252);
+  border-radius: 5px;
+  background: rgb(250, 251, 252);
+  font-size: 0.9em;
+  width: 100%;
+
+  transition background-color .3s ease;
+
+  &:hover {
+    background-color: rgb(244, 245, 247);
+    border-color: rgb(244, 245, 247);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #0077cc;
+    background-color: white;
+  }
+
+  &.is-invalid {
+    box-shadow: 0 0 0 2px ${colors.warning};
+  }
+`
+
+export const BaseTextArea = styled('textarea')`
+  appearance: none;
+  padding: 0.75em;
+  border: solid 1px rgb(250, 251, 252);
+  border-radius: 5px;
+  background: rgb(250, 251, 252);
+  font-size: 0.9em;
+  width: 100%;
+
+  transition background-color .3s ease;
+
+  &:hover {
+    background-color: rgb(244, 245, 247);
+    border-color: rgb(244, 245, 247);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #0077cc;
+    background-color: white;
+  }
+
+  &.is-invalid {
+    box-shadow: 0 0 0 2px ${colors.warning};
+  }
+`
+
+export const Input = ({ label, isInvalid, ...rest }) => (
+  <label>
+    {label}
+    <BaseInput
+      className={(() => {
+        if (isInvalid) {
+          return 'is-invalid'
+        } else {
+          return null
+        }
+      })()}
+      {...rest}
+    />
+  </label>
+)
+
+export const TextArea = ({ label, isInvalid, ...rest }) => (
+  <label>
+    {label}
+    <BaseTextArea
+      className={(() => {
+        if (isInvalid) {
+          return 'is-invalid'
+        } else {
+          return null
+        }
+      })()}
+      {...rest}
+    />
+  </label>
+)
+
+export const Select = ({ label, ...rest }) => (
+  <label>
+    {label}
+    <BaseSelect {...rest} />
+  </label>
+)

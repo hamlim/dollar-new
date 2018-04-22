@@ -5,4 +5,5 @@ export const selectDate = state => state.date
 export const selectTag = state => state.tag
 export const selectType = state => state.type
 
-export const selectValueFromEvent = event => event.target.value
+export const selectValueFromEvent = event =>
+  event.target.value

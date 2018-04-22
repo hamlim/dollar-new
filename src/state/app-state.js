@@ -1,3 +1,4 @@
+import { TRANSACTIONS } from './state-enums'
 export const getInitialState = globalState => ({
   amount: 0,
   location: '',
@@ -7,4 +8,5 @@ export const getInitialState = globalState => ({
   type: '',
   date: globalState.today,
   notes: '',
+  allTransactions: TRANSACTIONS.default,
 })

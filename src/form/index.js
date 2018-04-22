@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Container from '../components/container.js'
 import {
   Form,
@@ -13,12 +13,13 @@ import actionCreators from '../state/app-actions'
 import { handleFormSubmit } from '../state/app-thunks'
 import { Box, Flex } from 'grid-styled'
 import Spinner from '@atlaskit/spinner'
+import { FORM } from '../state/state-enums'
 
 export default () => (
   <Consumer>
     {({ dispatch, ...state }) => (
       <Container>
-        {state.formSubmitting ? (
+        {state.formSubmitting === FORM.starting ? (
           <Flex
             justifyContent="center"
             alignItems="center"
@@ -27,127 +28,135 @@ export default () => (
             <Spinner size="xlarge" />
           </Flex>
         ) : (
-          <Form>
-            <Flex flexDirection="column">
-              <Box my={2}>
-                <Input
-                  isInvalid={state.amountError}
-                  label="Enter Amount: "
-                  onChange={event =>
-                    dispatch(
-                      actionCreators.amountChange(event),
-                    )
-                  }
-                  value={state.amount}
-                  type="text"
-                />
-              </Box>
-              <Box my={2}>
-                <Select
-                  value={state.type}
-                  label="Enter Type:"
-                  isInvalid={state.typeError}
-                  onSelected={event =>
-                    dispatch(
-                      actionCreators.typeChange(event),
-                    )
-                  }
-                  hasAutocomplete
-                  items={[
-                    {
-                      items: [
-                        {
-                          content: 'Groceries',
-                          value: 'groceries',
-                        },
-                        {
-                          content: 'Fast Food',
-                          value: 'fast-food',
-                        },
-                        {
-                          content: 'Home',
-                          value: 'home',
-                        },
-                        {
-                          content: 'Health',
-                          value: 'health',
-                        },
-                      ],
-                    },
-                  ]}
-                />
-              </Box>
-              <Box my={2}>
-                <Select
-                  value={state.tag}
-                  label="Enter Tag:"
-                  isInvalid={state.tagError}
-                  onSelected={event =>
-                    dispatch(
-                      actionCreators.tagChange(event),
-                    )
-                  }
-                  hasAutocomplete
-                  items={[
-                    {
-                      items: [
-                        {
-                          content: 'Debit',
-                          value: 'debit',
-                        },
-                        {
-                          content: 'Credit Card',
-                          value: 'credit',
-                        },
-                        {
-                          content: 'Cash',
-                          value: 'cash',
-                        },
-                      ],
-                    },
-                  ]}
-                />
-              </Box>
-              <Box my={2}>
-                <Input
-                  label="Enter Location:"
-                  onChange={event =>
-                    dispatch(
-                      actionCreators.locationChange(event),
-                    )
-                  }
-                  value={state.location}
-                  type="text"
-                />
-              </Box>
-              <Box my={2}>
-                <TextArea
-                  label="Enter Notes:"
-                  id="notes"
-                  onChange={event =>
-                    dispatch(
-                      actionCreators.notesChange(event),
-                    )
-                  }
-                  value={state.notes}
-                />
-              </Box>
-              <Flex justifyContent="flex-end">
+          <Fragment>
+            {state.formSubmitting === FORM.done && (
+              <div>Successfully Submitted!</div>
+            )}
+            <Form>
+              <Flex flexDirection="column">
                 <Box my={2}>
-                  <Button
-                    type="button"
-                    appearance="primary"
-                    onClick={handleFormSubmit(
-                      dispatch,
-                      state,
-                    )}
-                  >
-                    Submit
-                  </Button>
+                  <Input
+                    isInvalid={state.amountError}
+                    label="Enter Amount: "
+                    onChange={event =>
+                      dispatch(
+                        actionCreators.amountChange(event),
+                      )
+                    }
+                    value={state.amount}
+                    type="text"
+                  />
                 </Box>
+                <Box my={2}>
+                  <Select
+                    label="Select a type:"
+                    value={state.type}
+                    label="Enter Type:"
+                    validationState={
+                      state.typeError ? 'error' : null
+                    }
+                    isInvalid={state.typeError}
+                    onChange={event =>
+                      dispatch(
+                        actionCreators.typeChange(event),
+                      )
+                    }
+                    options={[
+                      {
+                        label: 'Groceries',
+                        value: 'groceries',
+                      },
+                      {
+                        label: 'Fast Food',
+                        value: 'fast-food',
+                      },
+                      {
+                        label: 'Home',
+                        value: 'home',
+                      },
+                      {
+                        label: 'Health',
+                        value: 'health',
+                      },
+                    ]}
+                  />
+                </Box>
+                <Box my={2}>
+                  <Select
+                    label="Select a tag:"
+                    value={state.tag}
+                    label="Enter Tag:"
+                    validationState={
+                      state.tagError ? 'error' : null
+                    }
+                    isInvalid={state.tagError}
+                    onChange={event =>
+                      dispatch(
+                        actionCreators.tagChange(event),
+                      )
+                    }
+                    options={[
+                      {
+                        label: 'Debit',
+                        value: 'debit',
+                      },
+                      {
+                        label: 'Credit Card',
+                        value: 'credit',
+                      },
+                      {
+                        label: 'Cash',
+                        value: 'cash',
+                      },
+                    ]}
+                  />
+                </Box>
+                <Box my={2}>
+                  <Input
+                    isFitContainerWidthEnabled
+                    label="Enter Location:"
+                    onChange={event =>
+                      dispatch(
+                        actionCreators.locationChange(
+                          event,
+                        ),
+                      )
+                    }
+                    value={state.location}
+                    isInvalid={state.locationError}
+                    type="text"
+                  />
+                </Box>
+                <Box my={2}>
+                  <TextArea
+                    isFitContainerWidthEnabled
+                    label="Enter Notes:"
+                    id="notes"
+                    onChange={event =>
+                      dispatch(
+                        actionCreators.notesChange(event),
+                      )
+                    }
+                    value={state.notes}
+                  />
+                </Box>
+                <Flex justifyContent="flex-end">
+                  <Box my={2}>
+                    <Button
+                      type="button"
+                      appearance="primary"
+                      onClick={handleFormSubmit(
+                        dispatch,
+                        state,
+                      )}
+                    >
+                      Submit
+                    </Button>
+                  </Box>
+                </Flex>
               </Flex>
-            </Flex>
-          </Form>
+            </Form>
+          </Fragment>
         )}
       </Container>
     )}
